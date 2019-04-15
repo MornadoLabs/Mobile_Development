@@ -32,7 +32,7 @@ class GroupsListRecyclerViewAdapter(
             val item = v.tag as GroupWithEventsCount
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
+            mListener?.onListFragmentSelect(item)
         }
     }
 

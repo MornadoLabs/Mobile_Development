@@ -6,9 +6,10 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
         android:weightSum="3"
         android:background="@color/colorPrimaryDark"
-        tools:context=".Activities.LoginActivity" android:orientation="vertical">
+        tools:context=".Activities.LoginActivity" >
 
         <LinearLayout
                 android:layout_width="match_parent"

@@ -19,15 +19,15 @@ import com.example.besteventslviv.Database.Entities.UserEvent
 ), version = 1)
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun GetUsersDao(): UsersDao
-    abstract fun GetGroupsDao(): GroupsDao
-    abstract fun GetEventsDao(): EventsDao
-    abstract fun GetUserEventsDao(): UserEventsDao
+    abstract fun getUsersDao(): UsersDao
+    abstract fun getGroupsDao(): GroupsDao
+    abstract fun getEventsDao(): EventsDao
+    abstract fun getUserEventsDao(): UserEventsDao
 
     companion object {
         private var INSTANSE: AppDatabase? = null
 
-        fun GetAppDatabase(context: Context): AppDatabase? {
+        fun getAppDatabase(context: Context): AppDatabase? {
             if (INSTANSE == null){
                 synchronized(AppDatabase::class){
                     INSTANSE = Room.databaseBuilder(context.applicationContext,

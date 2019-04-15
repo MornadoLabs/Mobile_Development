@@ -40,7 +40,7 @@ class DayEventsListRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_groups_list_item, parent, false)
+            .inflate(R.layout.fragment_day_events_list_item, parent, false)
         return ViewHolder(view)
     }
 

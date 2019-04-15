@@ -32,7 +32,7 @@ class EventsListFactory: ListFactory() {
     }
 
     override fun getDao(appDatabase: AppDatabase): ItemListDao<*> {
-        return appDatabase.GetEventsDao()
+        return appDatabase.getEventsDao()
     }
 
     override fun getArgs(): Any? {

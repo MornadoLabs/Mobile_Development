@@ -9,7 +9,6 @@ abstract class ListFactory {
     abstract fun getAdapter(listItems: List<*>, listener: CustomDataListFragment.OnListFragmentInteractionListener<*>): RecyclerView.Adapter<*>
     abstract fun getDao(appDatabase: AppDatabase): ItemListDao<*>
     abstract fun getArgs(): Any?
-    //abstract fun GetItemView(): ViewGroup?
 
     companion object {
         fun getFactory(listType: ListType): ListFactory? {

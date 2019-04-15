@@ -7,16 +7,16 @@
         android:layout_width="match_parent"
         android:layout_gravity="center"
         android:background="@color/colorPrimaryDark"
-        tools:context=".Activities.GroupsActivity"
+        tools:context=".Activities.EventsActivity"
         android:orientation="vertical">
 
     <FrameLayout
-            android:id="@+id/groups_fragment_container"
+            android:id="@+id/events_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         <fragment
-                android:id="@+id/groups_list_fragment"
+                android:id="@+id/events_list_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="com.example.besteventslviv.Fragments.CustomDataListFragment"/>

@@ -9,13 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.besteventslviv.Database.AppDatabase
 import com.example.besteventslviv.Database.Dao.ItemListDao
-import com.example.besteventslviv.Fragments.Adapters.GroupsListRecyclerViewAdapter
 import com.example.besteventslviv.Fragments.ListFactories.ListFactory
 import com.example.besteventslviv.Fragments.ListFactories.ListType
-import com.example.besteventslviv.Models.GroupWithEventsCount
 import com.example.besteventslviv.R
-
-import com.example.besteventslviv.dummy.GroupsContent
 
 /**
  * A fragment representing a list of Items.
@@ -35,7 +31,6 @@ class CustomDataListFragment : Fragment() {
 
         arguments?.let {
             listType = ListType.valueOf(it.getString(ARG_LIST_TYPE))
-            initComponents()
         }
     }
 
@@ -44,6 +39,7 @@ class CustomDataListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_custom_data_list, container, false)
+        initComponents()
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -76,7 +72,7 @@ class CustomDataListFragment : Fragment() {
     private fun initComponents(){
         val factory = ListFactory.getFactory(listType)!!
 
-        appDatabase = AppDatabase.GetAppDatabase(activity!!.baseContext)!!
+        appDatabase = AppDatabase.getAppDatabase(activity!!.baseContext)!!
         listDao = factory.getDao(appDatabase!!)
         val args = factory.getArgs()
         val itemList = listDao!!.getListItems(args)
@@ -96,6 +92,8 @@ class CustomDataListFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener<T> {
         fun onListFragmentInteraction(item: T?)
+        fun onListFragmentSelect(item: T?)
+        fun onListFragmentDelete(item: T?)
     }
 
     companion object {

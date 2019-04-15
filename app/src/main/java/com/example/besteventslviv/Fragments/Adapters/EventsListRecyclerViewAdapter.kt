@@ -33,13 +33,13 @@ class EventsListRecyclerViewAdapter(
             val item = v.tag as Event
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
+            mListener?.onListFragmentSelect(item)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_groups_list_item, parent, false)
+            .inflate(R.layout.fragment_events_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -51,7 +51,7 @@ class EventsListRecyclerViewAdapter(
         holder.mLocationView.text = item.Location
         holder.mImageView.setImageBitmap(BitmapFactory.decodeByteArray(item.Image, 0, item.Image.size))
 
-        with(holder.mView) {
+        with(holder.mGetMoreInfoButton) {
             tag = item
             setOnClickListener(mOnClickListener)
         }
