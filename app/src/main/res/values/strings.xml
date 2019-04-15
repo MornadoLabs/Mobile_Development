@@ -8,12 +8,17 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_password_confirm">Confirm Password</string>
     <string name="action_sign_in">Continue</string>
-    <string name="error_login_exists">This has already exists</string>
+    <string name="error_login_exists">This login has already exists</string>
+    <string name="error_login_not_exists">This login has already exists</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_email_exists">This email has already exists</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_login_required">Login is required</string>
+    <string name="error_password_required">Password is required</string>
+    <string name="error_password_confirm_required">Password confirmation is required</string>
+    <string name="error_passwords_are_not_the_same">Passwords are not the same</string>
     <!-- Strings related to Event Info -->
     <string name="get_tickets_caption">Get tickets</string>
 </resources>
