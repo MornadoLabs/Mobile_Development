@@ -21,69 +21,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         appDatabase = AppDatabase.getAppDatabase(this.baseContext)!!
 
-        sign_in.setOnClickListener { _ -> setSignIn() }
+        sign_in.setOnClickListener { _ -> setSignInView() }
 
-        sign_up.setOnClickListener { _ -> setSignUp() }
+        sign_up.setOnClickListener { _ -> setSignUpView() }
 
-        login_continue_button.setOnClickListener { v ->
-
-            if (login.text.isNullOrEmpty()) {
-                showToasrt(R.string.error_login_required.toString())
-                return@setOnClickListener
-            }
-
-            if (password.text.isNullOrEmpty()) {
-                showToasrt(R.string.error_password_required.toString())
-                return@setOnClickListener
-            }
-
-            if (isSignIn) {
-                if (!checkUserExists()) {
-                    showToasrt(R.string.error_login_not_exists.toString())
-                    return@setOnClickListener
-                }
-
-                if (!checkIsPasswordCorrect()) {
-                    showToasrt(R.string.error_incorrect_password.toString())
-                    return@setOnClickListener
-                }
-
-                StaticCache.UserID = appDatabase.getUsersDao().getUserByLogin(login.text.toString())!!.ID
-
-                val intent = Intent(this, GroupsActivity::class.java)
-                startActivity(intent)
-            } else {
-                if (passwordConfirm.text.isNullOrEmpty()) {
-                    showToasrt(R.string.error_password_confirm_required.toString())
-                    return@setOnClickListener
-                }
-
-                if (!checkUserExists()) {
-                    showToasrt(R.string.error_login_exists.toString())
-                    return@setOnClickListener
-                }
-
-                if (!checkPasswordsAreTheSame()) {
-                    showToasrt(R.string.error_passwords_are_not_the_same.toString())
-                    return@setOnClickListener
-                }
-
-                var newUser = User(
-                    ID = 0,
-                    Login = login.text.toString(),
-                    Password = password.text.toString(),
-                    Email = email.text.toString()
-                )
-
-                StaticCache.UserID = appDatabase.getUsersDao().Insert(newUser)
-
-                val intent = Intent(this, GroupsActivity::class.java)
-                startActivity(intent)
-            }
-        }
+        login_continue_button.setOnClickListener { _ -> logIn() }
     }
 
-    private fun setSignIn() {
+    private fun setSignInView() {
         sign_in.setBackgroundColor(resources.getColor(R.color.Transparent))
         sign_up.setBackgroundColor(R.drawable.button_bottom_border)
         emailLayout.visibility = View.GONE
@@ -91,12 +36,67 @@ class LoginActivity : AppCompatActivity() {
         isSignIn = true
     }
 
-    private fun setSignUp() {
+    private fun setSignUpView() {
         sign_up.setBackgroundColor(resources.getColor(R.color.Transparent))
         sign_in.setBackgroundColor(R.drawable.button_bottom_border)
         emailLayout.visibility = View.VISIBLE
         passwordConfirmLayout.visibility = View.VISIBLE
         isSignIn = false
+    }
+
+    private fun logIn() {
+        if (login.text.isNullOrEmpty()) {
+            showToasrt(R.string.error_login_required.toString())
+            return
+        }
+
+        if (password.text.isNullOrEmpty()) {
+            showToasrt(R.string.error_password_required.toString())
+            return
+        }
+
+        if (isSignIn) {
+            if (!checkUserExists()) {
+                showToasrt(R.string.error_login_not_exists.toString())
+                return
+            }
+
+            if (!checkIsPasswordCorrect()) {
+                showToasrt(R.string.error_incorrect_password.toString())
+                return
+            }
+
+            StaticCache.UserID = appDatabase.getUsersDao().getUserByLogin(login.text.toString())!!.ID
+
+            val intent = Intent(this, GroupsActivity::class.java)
+            startActivity(intent)
+        } else {
+            if (passwordConfirm.text.isNullOrEmpty()) {
+                showToasrt(R.string.error_password_confirm_required.toString())
+                return
+            }
+
+            if (!checkUserExists()) {
+                showToasrt(R.string.error_login_exists.toString())
+                return
+            }
+
+            if (!checkPasswordsAreTheSame()) {
+                showToasrt(R.string.error_passwords_are_not_the_same.toString())
+                return
+            }
+
+            var newUser = User(
+                Login = login.text.toString(),
+                Password = password.text.toString(),
+                Email = email.text.toString()
+            )
+
+            StaticCache.UserID = appDatabase.getUsersDao().Insert(newUser).toInt()
+
+            val intent = Intent(this, GroupsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun checkUserExists(): Boolean {

@@ -18,7 +18,7 @@ abstract class ListFactory {
                 ListType.DayEvents -> return DayEventsListFactory()
             }
 
-            return null
+            return GroupsListFactory()
         }
     }
 }

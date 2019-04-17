@@ -49,7 +49,7 @@ class DayEventsListRecyclerViewAdapter(
         holder.mIdView.text = item.UserEventID.toString()
         holder.mNameView.text = item.Event.Name
         holder.mTimeView.text = item.Event.Date.time.toString()
-        holder.mNotifyView.isChecked = item.Notyfi
+        holder.mNotifyView.isChecked = item.Notify
         holder.mImageView.setImageBitmap(BitmapFactory.decodeByteArray(item.Event.Image, 0, item.Event.Image.size))
 
         with(holder.mView) {

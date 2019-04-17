@@ -6,10 +6,10 @@ import com.example.besteventslviv.Database.Entities.Event
 @Dao
 interface EventsDao: ItemListDao<Event> {
     @Insert
-    fun Insert(event: Event): Int
+    fun Insert(event: Event): Long
 
     @Insert
-    fun Insert(events: List<Event>): Int
+    fun Insert(events: List<Event>): List<Long>
 
     @Update
     fun Update(event: Event)
@@ -30,5 +30,5 @@ interface EventsDao: ItemListDao<Event> {
     fun getEventById(eventId: Int): Event
 
     @Query("SELECT * FROM Events WHERE GroupID = :arg1")
-    override fun getListItems(arg1: Any?): List<Event>
+    override fun getListItems(arg1: Int): List<Event>
 }

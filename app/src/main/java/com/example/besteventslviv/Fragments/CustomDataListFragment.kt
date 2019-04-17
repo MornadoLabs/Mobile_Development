@@ -30,7 +30,7 @@ class CustomDataListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            listType = ListType.valueOf(it.getString(ARG_LIST_TYPE))
+            listType = ListType.valueOf(it.getString(ARG_LIST_TYPE)!!)
         }
     }
 
@@ -74,7 +74,7 @@ class CustomDataListFragment : Fragment() {
 
         appDatabase = AppDatabase.getAppDatabase(activity!!.baseContext)!!
         listDao = factory.getDao(appDatabase!!)
-        val args = factory.getArgs()
+        val args = factory.getArgs() as Int
         val itemList = listDao!!.getListItems(args)
         viewAdapter = factory.getAdapter(itemList, listener!!)
     }

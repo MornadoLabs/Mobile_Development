@@ -8,10 +8,10 @@ import java.util.*
 @Dao
 interface UserEventsDao: ItemListDao<DayEvent> {
     @Insert
-    fun Insert(userEvent: UserEvent): Int
+    fun Insert(userEvent: UserEvent): Long
 
     @Insert
-    fun Insert(userEvents: List<UserEvent>): Int
+    fun Insert(userEvents: List<UserEvent>): List<Long>
 
     @Update
     fun Update(userEvent: UserEvent)
@@ -25,9 +25,9 @@ interface UserEventsDao: ItemListDao<DayEvent> {
     @Delete
     fun Delete(userEvents: List<UserEvent>): Int
 
-    @Query("SELECT ue.ID, e.*, ue.Notify FROM UserEvents ue JOIN Events e ON ue.EventID = e.ID JOIN Users u ON ue.UserID = u.ID WHERE u.ID = :userID AND e.Date = :date")
+    @Query("SELECT ue.ID as UserEventID, e.*, ue.Notify FROM UserEvents ue JOIN Events e ON ue.EventID = e.ID JOIN Users u ON ue.UserID = u.ID WHERE u.ID = :userID AND e.Date = :date")
     fun getUserEventsByUserIdAndDate(userID: Int, date: Date): List<DayEvent>
 
-    @Query("SELECT ue.ID, e.*, ue.Notify FROM UserEvents ue JOIN Events e ON ue.EventID = e.ID JOIN Users u ON ue.UserID = u.ID WHERE u.ID = :arg1 AND e.Date = GETDATE()")
-    override fun getListItems(arg1: Any?): List<DayEvent>
+    @Query("SELECT ue.ID as UserEventID, e.*, ue.Notify FROM UserEvents ue JOIN Events e ON ue.EventID = e.ID JOIN Users u ON ue.UserID = u.ID WHERE u.ID = :arg1 AND e.Date = date('now')")
+    override fun getListItems(arg1: Int): List<DayEvent>
 }

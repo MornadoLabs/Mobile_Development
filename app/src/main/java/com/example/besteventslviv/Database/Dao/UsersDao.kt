@@ -6,10 +6,10 @@ import com.example.besteventslviv.Database.Entities.User
 @Dao
 interface UsersDao {
     @Insert
-    fun Insert(user: User): Int
+    fun Insert(user: User): Long
 
     @Insert
-    fun Insert(users: List<User>): Int
+    fun Insert(users: List<User>): List<Long>
 
     @Update
     fun Update(user: User)
