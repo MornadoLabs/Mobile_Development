@@ -18,6 +18,7 @@ class GroupsListFactory: ListFactory() {
             listItems as List<GroupWithEventsCount>
             listener as CustomDataListFragment.OnListFragmentInteractionListener<GroupWithEventsCount>
 
+            GroupsContent.clear()
             GroupsContent.addItems(listItems)
 
             return GroupsListRecyclerViewAdapter(
@@ -35,6 +36,6 @@ class GroupsListFactory: ListFactory() {
     }
 
     override fun getArgs(): Any? {
-        return null
+        return 0
     }
 }

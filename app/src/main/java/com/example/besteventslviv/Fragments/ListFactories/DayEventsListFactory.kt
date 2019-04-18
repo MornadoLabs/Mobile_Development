@@ -19,6 +19,7 @@ class DayEventsListFactory: ListFactory() {
             listItems as List<DayEvent>
             listener as CustomDataListFragment.OnListFragmentInteractionListener<DayEvent>
 
+            DayEventsContent.clear()
             DayEventsContent.addItems(listItems)
 
             return DayEventsListRecyclerViewAdapter(

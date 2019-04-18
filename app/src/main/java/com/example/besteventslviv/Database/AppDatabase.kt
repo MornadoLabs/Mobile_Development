@@ -16,7 +16,7 @@ import com.example.besteventslviv.Database.Entities.UserEvent
     Group::class,
     Event::class,
     UserEvent::class
-), version = 1)
+), version = 2)
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun getUsersDao(): UsersDao
@@ -31,7 +31,9 @@ abstract class AppDatabase: RoomDatabase() {
             if (INSTANSE == null){
                 synchronized(AppDatabase::class){
                     INSTANSE = Room.databaseBuilder(context.applicationContext,
-                        AppDatabase::class.java, "myDB").build()
+                        AppDatabase::class.java, "myDB")
+                        .allowMainThreadQueries()
+                        .build()
                 }
             }
 

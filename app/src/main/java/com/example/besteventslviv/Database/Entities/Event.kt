@@ -10,7 +10,8 @@ import java.util.*
         ForeignKey(entity = Group::class, parentColumns = arrayOf("ID"), childColumns = arrayOf("GroupID"), onDelete = CASCADE)
     ),
     indices = arrayOf(
-        Index(value = arrayOf("GroupID"), name = "IX_Events_GroupID")
+        Index(value = arrayOf("GroupID"), name = "IX_Events_GroupID"),
+        Index(value = arrayOf("Name"), name = "IX_Events_Name", unique = true)
     )
 )
 data class Event (

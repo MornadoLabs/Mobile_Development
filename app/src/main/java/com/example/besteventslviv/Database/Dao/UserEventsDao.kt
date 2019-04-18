@@ -29,5 +29,5 @@ interface UserEventsDao: ItemListDao<DayEvent> {
     fun getUserEventsByUserIdAndDate(userID: Int, date: Date): List<DayEvent>
 
     @Query("SELECT ue.ID as UserEventID, e.*, ue.Notify FROM UserEvents ue JOIN Events e ON ue.EventID = e.ID JOIN Users u ON ue.UserID = u.ID WHERE u.ID = :arg1 AND e.Date = date('now')")
-    override fun getListItems(arg1: Int): List<DayEvent>
+    override fun getListItems(arg1: Int?): List<DayEvent>
 }

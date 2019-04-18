@@ -25,4 +25,7 @@ interface UsersDao {
 
     @Query("SELECT * FROM Users WHERE Login = :login")
     fun getUserByLogin(login: String): User?
+
+    @Query("SELECT * FROM Users")
+    fun getAllUsers(): List<User>
 }

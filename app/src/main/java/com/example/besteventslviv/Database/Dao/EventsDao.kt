@@ -30,5 +30,5 @@ interface EventsDao: ItemListDao<Event> {
     fun getEventById(eventId: Int): Event
 
     @Query("SELECT * FROM Events WHERE GroupID = :arg1")
-    override fun getListItems(arg1: Int): List<Event>
+    override fun getListItems(arg1: Int?): List<Event>
 }

@@ -9,7 +9,7 @@
     <string name="prompt_password_confirm">Confirm Password</string>
     <string name="action_sign_in">Continue</string>
     <string name="error_login_exists">This login has already exists</string>
-    <string name="error_login_not_exists">This login has already exists</string>
+    <string name="error_login_not_exists">This login has no exists</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_email_exists">This email has already exists</string>
     <string name="error_invalid_password">This password is too short</string>

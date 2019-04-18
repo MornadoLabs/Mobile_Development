@@ -19,6 +19,7 @@ class EventsListFactory: ListFactory() {
             listItems as List<Event>
             listener as CustomDataListFragment.OnListFragmentInteractionListener<Event>
 
+            EventsContent.clear()
             EventsContent.addItems(listItems)
 
             return EventsListRecyclerViewAdapter(

@@ -28,5 +28,5 @@ interface GroupsDao: ItemListDao<GroupWithEventsCount> {
     fun getAll(): List<Group>
 
     @Query("SELECT g.*, COUNT(e.ID) as EventsCount FROM Groups g JOIN Events e ON g.ID = e.GroupID AND :arg1 = :arg1 GROUP BY g.ID")
-    override fun getListItems(arg1: Int): List<GroupWithEventsCount>
+    override fun getListItems(arg1: Int?): List<GroupWithEventsCount>
 }

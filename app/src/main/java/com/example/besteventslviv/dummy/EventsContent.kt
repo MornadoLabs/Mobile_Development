@@ -30,4 +30,9 @@ object EventsContent {
         ITEMS.remove(item)
         ITEM_MAP.remove(item.ID)
     }
+
+    fun clear() {
+        ITEMS.clear()
+        ITEM_MAP.clear()
+    }
 }

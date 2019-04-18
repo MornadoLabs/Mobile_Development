@@ -9,20 +9,21 @@ import com.example.besteventslviv.Models.GroupWithEventsCount
 import com.example.besteventslviv.R
 import com.example.besteventslviv.StaticCache
 
+
+
 class GroupsActivity :
     AppCompatActivity(),
     CustomDataListFragment.OnListFragmentInteractionListener<GroupWithEventsCount> {
 
-    var listFragment: CustomDataListFragment? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_groups)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        listFragment = CustomDataListFragment.newInstance(ListType.Groups)
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.groups_fragment_container, CustomDataListFragment.newInstance(ListType.Groups))
+                .commit()
+        }
     }
 
     override fun onListFragmentSelect(item: GroupWithEventsCount?) {

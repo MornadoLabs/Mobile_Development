@@ -3,6 +3,8 @@ package com.example.besteventslviv.Fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import com.example.besteventslviv.Database.Dao.ItemListDao
 import com.example.besteventslviv.Fragments.ListFactories.ListFactory
 import com.example.besteventslviv.Fragments.ListFactories.ListType
 import com.example.besteventslviv.R
+import kotlinx.android.synthetic.main.fragment_custom_data_list.*
 
 /**
  * A fragment representing a list of Items.
@@ -38,23 +41,32 @@ class CustomDataListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_custom_data_list, container, false)
-        initComponents()
+        return inflater.inflate(R.layout.fragment_custom_data_list, container, false)
+    }
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                adapter = viewAdapter
-            }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val devider = DividerItemDecoration(list.context, DividerItemDecoration.VERTICAL)
+        devider.setDrawable(context!!.getDrawable(R.drawable.custom_devider)!!)
+
+        list?.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(activity?.baseContext)
+            addItemDecoration(devider)
         }
-        return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initComponents()
+        list.adapter = this.viewAdapter
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
             listener = context as OnListFragmentInteractionListener<*>
-            initComponents()
         }
         catch (e: Exception){
             throw RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener")
@@ -74,7 +86,7 @@ class CustomDataListFragment : Fragment() {
 
         appDatabase = AppDatabase.getAppDatabase(activity!!.baseContext)!!
         listDao = factory.getDao(appDatabase!!)
-        val args = factory.getArgs() as Int
+        val args = factory.getArgs() as Int?
         val itemList = listDao!!.getListItems(args)
         viewAdapter = factory.getAdapter(itemList, listener!!)
     }

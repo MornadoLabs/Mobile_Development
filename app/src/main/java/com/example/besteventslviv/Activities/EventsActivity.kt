@@ -13,16 +13,15 @@ class EventsActivity :
     AppCompatActivity(),
     CustomDataListFragment.OnListFragmentInteractionListener<Event> {
 
-    var listFragment: CustomDataListFragment? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_events)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        listFragment = CustomDataListFragment.newInstance(ListType.Events)
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.events_fragment_container, CustomDataListFragment.newInstance(ListType.Events))
+                .commit()
+        }
     }
 
     override fun onListFragmentSelect(item: Event?) {

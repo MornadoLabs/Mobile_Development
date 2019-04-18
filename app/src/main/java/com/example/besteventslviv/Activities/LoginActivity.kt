@@ -1,15 +1,23 @@
 package com.example.besteventslviv.Activities
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.besteventslviv.Database.AppDatabase
+import com.example.besteventslviv.Database.Entities.Group
 import com.example.besteventslviv.Database.Entities.User
 import com.example.besteventslviv.R
 import com.example.besteventslviv.StaticCache
 import kotlinx.android.synthetic.main.activity_login.*
+import android.graphics.BitmapFactory
+import android.os.Environment
+import com.example.besteventslviv.Database.Entities.Event
+import java.io.ByteArrayOutputStream
+import java.util.*
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -29,16 +37,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setSignInView() {
-        sign_in.setBackgroundColor(resources.getColor(R.color.Transparent))
-        sign_up.setBackgroundColor(R.drawable.button_bottom_border)
+        sign_up.setBackgroundColor(getColor(R.color.Transparent))
+        sign_in.background = getDrawable(R.drawable.button_bottom_border)
         emailLayout.visibility = View.GONE
         passwordConfirmLayout.visibility = View.GONE
         isSignIn = true
     }
 
     private fun setSignUpView() {
-        sign_up.setBackgroundColor(resources.getColor(R.color.Transparent))
-        sign_in.setBackgroundColor(R.drawable.button_bottom_border)
+        sign_in.setBackgroundColor(getColor(R.color.Transparent))
+        sign_up.background = getDrawable(R.drawable.button_bottom_border)
         emailLayout.visibility = View.VISIBLE
         passwordConfirmLayout.visibility = View.VISIBLE
         isSignIn = false
@@ -46,23 +54,23 @@ class LoginActivity : AppCompatActivity() {
 
     private fun logIn() {
         if (login.text.isNullOrEmpty()) {
-            showToasrt(R.string.error_login_required.toString())
+            showToasrt(getString(R.string.error_login_required))
             return
         }
 
         if (password.text.isNullOrEmpty()) {
-            showToasrt(R.string.error_password_required.toString())
+            showToasrt(getString(R.string.error_password_required))
             return
         }
 
         if (isSignIn) {
             if (!checkUserExists()) {
-                showToasrt(R.string.error_login_not_exists.toString())
+                showToasrt(getString(R.string.error_login_not_exists))
                 return
             }
 
             if (!checkIsPasswordCorrect()) {
-                showToasrt(R.string.error_incorrect_password.toString())
+                showToasrt(getString(R.string.error_incorrect_password))
                 return
             }
 
@@ -72,17 +80,17 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             if (passwordConfirm.text.isNullOrEmpty()) {
-                showToasrt(R.string.error_password_confirm_required.toString())
+                showToasrt(getString(R.string.error_password_confirm_required))
                 return
             }
 
-            if (!checkUserExists()) {
-                showToasrt(R.string.error_login_exists.toString())
+            if (checkUserExists()) {
+                showToasrt(getString(R.string.error_login_exists))
                 return
             }
 
             if (!checkPasswordsAreTheSame()) {
-                showToasrt(R.string.error_passwords_are_not_the_same.toString())
+                showToasrt(getString(R.string.error_passwords_are_not_the_same))
                 return
             }
 
@@ -101,18 +109,18 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkUserExists(): Boolean {
         val dao = appDatabase.getUsersDao()
-        var user = dao.getUserByLogin(login.text.toString())
-        return user == null
+        val user = dao.getUserByLogin(login.text.toString())
+        return user != null
     }
 
     private fun checkIsPasswordCorrect(): Boolean {
         val dao = appDatabase.getUsersDao()
-        var user = dao.getUserByLogin(login.text.toString())
+        val user = dao.getUserByLogin(login.text.toString())
         return user != null && user.Password == password.text.toString()
     }
 
     private fun checkPasswordsAreTheSame(): Boolean {
-        return password.text == passwordConfirm.text
+        return password.text.toString() == passwordConfirm.text.toString()
     }
 
     private fun showToasrt(message: String){

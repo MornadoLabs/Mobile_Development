@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.example.besteventslviv.Database.Entities.Event
 import com.example.besteventslviv.Fragments.CustomDataListFragment
 import com.example.besteventslviv.Fragments.CustomDataListFragment.OnListFragmentInteractionListener
+import com.example.besteventslviv.Helpers.DateHelper
 import com.example.besteventslviv.R
 
 import kotlinx.android.synthetic.main.fragment_events_list_item.view.*
@@ -47,7 +48,7 @@ class EventsListRecyclerViewAdapter(
         val item = mValues[position]
         holder.mIdView.text = item.ID.toString()
         holder.mNameView.text = item.Name
-        holder.mDateView.text = item.Date.toString()
+        holder.mDateView.text = DateHelper.DateToString(item.Date)
         holder.mLocationView.text = item.Location
         holder.mImageView.setImageBitmap(BitmapFactory.decodeByteArray(item.Image, 0, item.Image.size))
 

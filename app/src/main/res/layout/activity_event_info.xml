@@ -7,14 +7,21 @@
         android:layout_width="match_parent"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:weightSum="3"
+        android:weightSum="7"
         android:background="@color/colorPrimaryDark"
         tools:context=".Activities.EventInfoActivity">
 
+    <TextView
+            android:id="@+id/event_info_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:visibility="gone"/>
+
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
             android:layout_margin="30px">
 
         <ImageView
@@ -25,9 +32,9 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
-            android:layout_margin="30px"
+            android:layout_margin="16dp"
             android:orientation="vertical"
             android:weightSum="5">
 
@@ -44,24 +51,52 @@
                     android:textColor="@color/White"
                     android:textSize="@dimen/text_header_size"/>
 
-            <TextView
-                    android:id="@+id/event_info_date"
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/White"
-                    android:textSize="@dimen/text_subtitle_size"/>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:weightSum="2">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/event_info_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/text_subtitle_size"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/event_info_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/text_subtitle_size"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                     android:id="@+id/event_info_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/White"
-                    android:textSize="@dimen/text_subtitle_size"/>
-
-            <TextView
-                    android:id="@+id/event_info_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:textColor="@color/White"
                     android:textSize="@dimen/text_subtitle_size"/>
 
@@ -70,6 +105,8 @@
         <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:layout_weight="3">
 
             <TextView

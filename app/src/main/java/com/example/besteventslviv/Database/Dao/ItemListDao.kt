@@ -4,5 +4,5 @@ import android.arch.persistence.room.Dao
 
 @Dao
 interface ItemListDao<T> {
-    fun getListItems(arg1: Int): List<T>
+    fun getListItems(arg1: Int?): List<T>
 }
