@@ -21,4 +21,6 @@
     <string name="error_passwords_are_not_the_same">Passwords are not the same</string>
     <!-- Strings related to Event Info -->
     <string name="get_tickets_caption">Get tickets</string>
+    <!-- Strings related to Reports -->
+    <string name="unknown_error">BestEventsLvivApplication: Unknown error occurred!</string>
 </resources>

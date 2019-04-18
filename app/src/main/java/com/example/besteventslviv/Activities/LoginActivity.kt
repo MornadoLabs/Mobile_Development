@@ -16,6 +16,7 @@ import android.graphics.BitmapFactory
 import android.os.Environment
 import com.example.besteventslviv.Database.Entities.Event
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 import java.util.*
 
 
