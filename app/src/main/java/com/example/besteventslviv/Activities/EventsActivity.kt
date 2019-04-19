@@ -1,7 +1,6 @@
 package com.example.besteventslviv.Activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.besteventslviv.Database.Entities.Event
 import com.example.besteventslviv.Fragments.CustomDataListFragment
@@ -10,7 +9,7 @@ import com.example.besteventslviv.R
 import com.example.besteventslviv.StaticCache
 
 class EventsActivity :
-    AppCompatActivity(),
+    BaseActivity(),
     CustomDataListFragment.OnListFragmentInteractionListener<Event> {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,14 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 
 import com.example.besteventslviv.Fragments.CustomDataListFragment
 import com.example.besteventslviv.Models.DayEvent
 import com.example.besteventslviv.Fragments.CustomDataListFragment.OnListFragmentInteractionListener
+import com.example.besteventslviv.Helpers.DateHelper
 import com.example.besteventslviv.R
 
 import kotlinx.android.synthetic.main.fragment_day_events_list_item.view.*
@@ -27,11 +25,28 @@ class DayEventsListRecyclerViewAdapter(
     private val mListener: CustomDataListFragment.OnListFragmentInteractionListener<DayEvent>?
 ) : RecyclerView.Adapter<DayEventsListRecyclerViewAdapter.ViewHolder>() {
 
-    private val mOnClickListener: View.OnClickListener
+    private val mOnElementSelectListener: View.OnClickListener
+    private val mOnElementCancelListener: View.OnClickListener
+    private val mOnElementInteractionListener: CompoundButton.OnCheckedChangeListener
 
     init {
-        mOnClickListener = View.OnClickListener { v ->
+        mOnElementSelectListener = View.OnClickListener { v ->
             val item = v.tag as DayEvent
+            // Notify the active callbacks interface (the activity, if the fragment is attached to
+            // one) that an item has been selected.
+            mListener?.onListFragmentSelect(item)
+        }
+
+        mOnElementCancelListener = View.OnClickListener { v ->
+            val item = v.tag as DayEvent
+            // Notify the active callbacks interface (the activity, if the fragment is attached to
+            // one) that an item has been selected.
+            mListener?.onListFragmentDelete(item)
+        }
+
+        mOnElementInteractionListener = CompoundButton.OnCheckedChangeListener { v, isChecked ->
+            val item = v.tag as DayEvent
+            item.Notify = isChecked
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
@@ -48,13 +63,24 @@ class DayEventsListRecyclerViewAdapter(
         val item = mValues[position]
         holder.mIdView.text = item.UserEventID.toString()
         holder.mNameView.text = item.Event.Name
-        holder.mTimeView.text = item.Event.Date.time.toString()
+        holder.mDateView.text = DateHelper.DateToString(item.Event.Date)
+        holder.mTimeView.text = DateHelper.DateToTimeString(item.Event.Date)
         holder.mNotifyView.isChecked = item.Notify
         holder.mImageView.setImageBitmap(BitmapFactory.decodeByteArray(item.Event.Image, 0, item.Event.Image.size))
 
-        with(holder.mView) {
+        with(holder.mImageView) {
             tag = item
-            setOnClickListener(mOnClickListener)
+            setOnClickListener(mOnElementSelectListener)
+        }
+
+        with(holder.mCancelButton) {
+            tag = item
+            setOnClickListener(mOnElementCancelListener)
+        }
+
+        with(holder.mNotifyView) {
+            tag = item
+            setOnCheckedChangeListener(mOnElementInteractionListener)
         }
     }
 
@@ -63,6 +89,7 @@ class DayEventsListRecyclerViewAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mIdView: TextView = mView.day_event_id
         val mNameView: TextView = mView.event_name
+        val mDateView: TextView = mView.date
         val mTimeView: TextView = mView.time
         val mNotifyView: CheckBox = mView.notify
         val mCancelButton: Button = mView.cancel_event

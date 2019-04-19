@@ -1,8 +1,8 @@
 package com.example.besteventslviv.Activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import com.example.besteventslviv.Fragments.CustomDataListFragment
 import com.example.besteventslviv.Fragments.ListFactories.ListType
 import com.example.besteventslviv.Models.GroupWithEventsCount
@@ -10,9 +10,8 @@ import com.example.besteventslviv.R
 import com.example.besteventslviv.StaticCache
 
 
-
 class GroupsActivity :
-    AppCompatActivity(),
+    BaseActivity(),
     CustomDataListFragment.OnListFragmentInteractionListener<GroupWithEventsCount> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +23,22 @@ class GroupsActivity :
                 .add(R.id.groups_fragment_container, CustomDataListFragment.newInstance(ListType.Groups))
                 .commit()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id = item?.itemId
+        when (id) {
+            R.id.day_events_menu_item -> {
+                openDayEvents()
+                return true
+            }
+            R.id.log_out_menu_item -> {
+                logOut()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onListFragmentSelect(item: GroupWithEventsCount?) {

@@ -25,9 +25,12 @@ interface UserEventsDao: ItemListDao<DayEvent> {
     @Delete
     fun Delete(userEvents: List<UserEvent>): Int
 
-    @Query("SELECT ue.ID as UserEventID, e.*, ue.Notify FROM UserEvents ue JOIN Events e ON ue.EventID = e.ID JOIN Users u ON ue.UserID = u.ID WHERE u.ID = :userID AND e.Date = :date")
-    fun getUserEventsByUserIdAndDate(userID: Int, date: Date): List<DayEvent>
+    @Query("SELECT * FROM UserEvents WHERE ID = :Id")
+    fun getUserEventByID(Id: Int): UserEvent?
 
-    @Query("SELECT ue.ID as UserEventID, e.*, ue.Notify FROM UserEvents ue JOIN Events e ON ue.EventID = e.ID JOIN Users u ON ue.UserID = u.ID WHERE u.ID = :arg1 AND e.Date = date('now')")
+    @Query("SELECT * FROM UserEvents WHERE UserID = :userID AND EventID = :eventID")
+    fun getUserEventByUserIDAndEventID(userID: Int, eventID: Int): UserEvent?
+
+    @Query("SELECT ue.ID as UserEventID, e.*, ue.Notify FROM UserEvents ue JOIN Events e ON ue.EventID = e.ID JOIN Users u ON ue.UserID = u.ID WHERE u.ID = :arg1")
     override fun getListItems(arg1: Int?): List<DayEvent>
 }

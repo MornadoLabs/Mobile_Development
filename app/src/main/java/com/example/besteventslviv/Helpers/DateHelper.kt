@@ -10,8 +10,8 @@ class DateHelper {
             return formatter.format(date)
         }
 
-        fun DateTimeToString(date: Date): String {
-            var formatter = SimpleDateFormat("d MMM yyyy HH:mm a")
+        fun DateToTimeString(date: Date): String {
+            var formatter = SimpleDateFormat("HH:mm a")
             return formatter.format(date)
         }
     }

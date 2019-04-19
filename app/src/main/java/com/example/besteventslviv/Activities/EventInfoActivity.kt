@@ -1,7 +1,6 @@
 package com.example.besteventslviv.Activities
 
 import android.graphics.BitmapFactory
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.besteventslviv.Database.AppDatabase
 import com.example.besteventslviv.Helpers.DateHelper
@@ -10,9 +9,12 @@ import com.example.besteventslviv.StaticCache
 import kotlinx.android.synthetic.main.activity_event_info.*
 import android.content.Intent
 import android.net.Uri
+import com.example.besteventslviv.Database.Entities.Event
+import com.example.besteventslviv.Database.Entities.UserEvent
+import com.example.besteventslviv.Services.NotificationService
 
 
-class EventInfoActivity : AppCompatActivity() {
+class EventInfoActivity : BaseActivity() {
 
     private lateinit var appDatabase: AppDatabase
 
@@ -25,8 +27,8 @@ class EventInfoActivity : AppCompatActivity() {
         super.onStart()
 
         appDatabase = AppDatabase.getAppDatabase(this.baseContext)!!
-        var eventsDao = appDatabase.getEventsDao()
-        var currentEvent = eventsDao.getEventById(StaticCache.EventID!!)
+        val eventsDao = appDatabase.getEventsDao()
+        val currentEvent = eventsDao.getEventById(StaticCache.EventID!!)
 
         event_info_id.text = StaticCache.EventID.toString()
         event_info_image.setImageBitmap(BitmapFactory.decodeByteArray(currentEvent.Image, 0, currentEvent.Image.size))
@@ -36,12 +38,28 @@ class EventInfoActivity : AppCompatActivity() {
         event_info_price.text = currentEvent.TicketsPrice
         event_info_description.text = currentEvent.Description
 
-        event_info_get_tickets.setOnClickListener { _ -> openEventInBrowser() }
+        event_info_get_tickets.setOnClickListener { _ -> processGetTickets() }
     }
 
-    private fun openEventInBrowser() {
+    private fun processGetTickets() {
         val eventsDao = appDatabase.getEventsDao()
-        val link = eventsDao.getEventById(event_info_id.text.toString().toInt()).Link
+        val userEventsDao = appDatabase.getUserEventsDao()
+
+        val eventId = event_info_id.text.toString().toInt()
+        val event = eventsDao.getEventById(eventId)
+
+        if (userEventsDao.getUserEventByUserIDAndEventID(StaticCache.UserID!!, eventId) == null){
+            val userEvent = UserEvent(StaticCache.UserID!!, eventId, true)
+            userEventsDao.Insert(userEvent)
+
+            startService(Intent(this, NotificationService::class.java)
+                .putExtra("event_id", event.ID)
+                .putExtra("event_name", event.Name)
+                .putExtra("event_location", event.Location)
+                .putExtra("event_date", event.Date))
+        }
+
+        val link = event.Link
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
         startActivity(browserIntent)
     }

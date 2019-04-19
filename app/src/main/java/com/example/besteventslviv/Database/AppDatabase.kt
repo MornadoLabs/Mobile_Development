@@ -16,7 +16,7 @@ import com.example.besteventslviv.Database.Entities.UserEvent
     Group::class,
     Event::class,
     UserEvent::class
-), version = 2)
+), version = 3)
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun getUsersDao(): UsersDao

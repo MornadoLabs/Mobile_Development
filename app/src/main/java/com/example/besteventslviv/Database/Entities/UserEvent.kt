@@ -12,8 +12,7 @@ import android.arch.persistence.room.PrimaryKey
         ForeignKey(entity = Event::class, parentColumns = arrayOf("ID"), childColumns = arrayOf("EventID"))
     ),
     indices = arrayOf(
-        Index(value = arrayOf("UserID"), name = "IX_UserEvents_UserID"),
-        Index(value = arrayOf("EventID"), name = "IX_UserEvents_EventID")
+        Index(value = arrayOf("UserID", "EventID"), name = "IX_UserEvents_UserID_EventID", unique = true)
     )
 )
 data class UserEvent (
